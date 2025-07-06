@@ -55,20 +55,33 @@ body.bg-image {
 }
 
 .menu {
-  color: #222;
-  display: inline-block;
-  position: relative;
   font-size: 20px;
-  cursor: pointer;
 }
 
 .menu-button {
-  background: none;
-  border: none;
   font-size: 20px;
-  cursor: pointer;
-  color: inherit;
   padding: 0;
+}
+
+@media (max-width: 600px) {
+  .menu {
+    font-size: 28px;
+  }
+
+  .menu-button {
+    font-size: 28px;
+    padding: 4px 8px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .menu {
+    font-size: 22px;
+  }
+
+  .menu-button {
+    font-size: 22px;
+  }
 }
 
 .dropdown {
