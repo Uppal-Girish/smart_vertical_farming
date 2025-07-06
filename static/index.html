@@ -103,8 +103,6 @@
       </div>
     </div>
   </main>
-
-  <!-- Section scrolling dots -->
   <script>
     const sections = document.querySelectorAll('.home-container, .story-container');
     const dots = document.querySelectorAll('.dot');
@@ -130,40 +128,20 @@
     });
   </script>
 
-  <!-- New script for dropdown toggle -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const menu = document.querySelector('.menu');
       const button = document.querySelector('.menu-button');
-
       button.addEventListener('click', (e) => {
         e.stopPropagation();
         menu.classList.toggle('open');
       });
-
       document.addEventListener('click', (e) => {
         if (!menu.contains(e.target)) {
           menu.classList.remove('open');
         }
       });
     });
-  </script>
-  <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const menu = document.querySelector('.menu');
-    const button = document.querySelector('.menu-button');
-
-    button.addEventListener('click', (e) => {
-      e.stopPropagation();
-      menu.classList.toggle('open');
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!menu.contains(e.target)) {
-        menu.classList.remove('open');
-      }
-    });
-  });
   </script>
 </body>
 </html>
