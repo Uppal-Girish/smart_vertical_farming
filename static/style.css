@@ -22,12 +22,29 @@ body.bg-image {
 .navbar {
     background: rgba(255, 255, 255, 0.9);
     padding: 15px;
+    font-size: 20px;
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1500;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 25px 15px;   
+    font-size: 26px;     
+  }
+
+  .menu-button {
+    font-size: 26px;      
+    padding: 10px 20px;   
+  }
+
+  .menu {
+    font-size: 26px;     
+  }
 }
 
 .dot-nav {
@@ -76,11 +93,11 @@ body.bg-image {
 
 @media (min-width: 1200px) {
   .menu {
-    font-size: 22px;
+    font-size: 20px;
   }
 
   .menu-button {
-    font-size: 22px;
+    font-size: 20px;
   }
 }
 
