@@ -59,10 +59,17 @@ body.bg-image {
     display: inline-block;
     position: relative;
     font-size: 20px;
-    cursor: pointer;
 }
 
-.dropdown {
+.menu-button {
+  background: none;
+  border: none;
+  color: #222;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.menu  .dropdown {
     display: none;
     position: absolute;
     top: 100%;
@@ -73,7 +80,7 @@ body.bg-image {
     z-index: 1000;
 }
 
-.menu:hover .dropdown {
+.menu.open .dropdown {
     display: block;
 }
 

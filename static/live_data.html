@@ -70,6 +70,22 @@
     ws.onclose = () => {
       console.log("WebSocket disconnected");
     };
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const menu = document.querySelector('.menu');
+      const button = document.querySelector('.menu-button');
+
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('open');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!menu.contains(e.target)) {
+          menu.classList.remove('open');
+        }
+      });
+    });
   </script>
 </body>
 </html>
