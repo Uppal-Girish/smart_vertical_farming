@@ -1,0 +1,75 @@
+<!--Use uvicorn main:app --host 0.0.0.0 --port 8080 --reload -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Live Data</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body class="bg-image">
+  <div class="navbar">
+    <div class="menu">
+      Contents
+      <div class="dropdown">
+        <a href="/">Home</a>
+        <a href="/live-data">Live Data</a>
+      </div>
+    </div>
+  </div>
+  <div style="padding-top: 100px;">
+    <h1>
+      <div class="marquee-container">
+        <div class="marquee">
+          Live Temperature, Humidity, Soil Moisture, Distance, Water Level
+        </div>
+      </div>
+    </h1>
+
+    <div class="content-box">
+      <div class="data-pair">
+        <strong>Temperature:</strong> <span id="temp">--</span> °C
+      </div>
+      <div class="data-pair">
+        <strong>Humidity:</strong> <span id="hum">--</span> %
+      </div>
+      <div class="data-pair">
+        <strong>Soil Moisture:</strong> <span id="soil">--</span>
+      </div>
+      <div class="data-pair">
+        <strong>Distance:</strong> <span id="dist">--</span> cm
+      </div>
+      <div class="data-pair">
+        <strong>Water Level:</strong> <span id="water">--</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const tempSpan = document.getElementById("temp");
+    const humSpan = document.getElementById("hum");
+    const soilSpan = document.getElementById("soil");
+    const distSpan = document.getElementById("dist");
+    const waterSpan = document.getElementById("water");
+
+    const wsProtocol = location.protocol === "https:" ? "wss" : "ws";
+    const ws = new WebSocket(`${wsProtocol}://${location.host}/ws`);
+
+    ws.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      tempSpan.textContent = data.temperature.toFixed(1);
+      humSpan.textContent = data.humidity.toFixed(1);
+      soilSpan.textContent = data.soilMoisture;
+      distSpan.textContent = data.distance;
+      waterSpan.textContent = data.waterDetected === 1 ? "Yes" : "No";
+    };
+
+    ws.onopen = () => {
+      console.log("WebSocket connected");
+    };
+
+    ws.onclose = () => {
+      console.log("WebSocket disconnected");
+    };
+  </script>
+</body>
+</html>

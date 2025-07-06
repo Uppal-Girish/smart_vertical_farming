@@ -1,0 +1,214 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+body.home-bg {
+  background-color: #254117;
+}
+
+body.bg-image {
+    background:
+      url('/static/Website.jpeg') top center repeat-x,
+      url('/static/Website.jpeg') bottom center repeat-x,
+      url('/static/Website.jpeg') left center repeat-y,
+      url('/static/Website.jpeg') right center repeat-y,
+      url('/static/Website.jpeg') no-repeat center top fixed;
+    background-size: contain;
+    background-repeat: no-repeat;   
+}
+
+.navbar {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.dot-nav {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 2000;
+}
+
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: grey;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.dot.active {
+  background-color: white;
+}
+
+.menu {
+    color: #222;
+    display: inline-block;
+    position: relative;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    z-index: 1000;
+}
+
+.menu:hover .dropdown {
+    display: block;
+}
+
+.dropdown a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    padding: 5px 0;
+}
+
+.dropdown a:hover {
+    color: #007BFF;
+}
+
+.home-container {
+    scroll-snap-align: start;
+    height: 100vh;
+    background: rgba(30, 170, 30, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    color: #fdfdfd;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    margin: 0;
+}
+
+.home-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.home-container h1 {
+  color: #f2a815;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    scroll-behavior: smooth;
+    overflow: hidden;
+}
+
+main {
+    height: 100vh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    padding-top: 70px;
+}
+
+.story-container {
+    scroll-snap-align: start;
+    height: 100vh;
+    background: rgba(30, 170, 30, 0.95);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: left;
+    color: #fdfdfd;
+    line-height: 1.7;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    margin: 0;
+}
+
+.story-container.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.home-container .content-box,
+.story-container .content-box {
+    max-width: 900px;
+    padding: 60px;
+    background: rgba(25, 120, 25, 0.95);
+    color: #fdfdfd;
+    border-radius: 10px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+    text-align: left;
+    line-height: 1.7;
+}
+
+.content-box {
+    background: rgba(255, 255, 255, 0.95);
+    color: #222;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    max-width: 600px;
+    margin: 40px auto;
+    text-align: left;
+}
+
+.content-box .data-pair {
+    color: #222;
+}
+
+h1, 
+.marquee-container, 
+.marquee {
+    color: #222;
+}
+
+.data-pair {
+    font-size: 22px;
+    margin: 10px 0;
+}
+
+.marquee-container {
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 10px 0;
+    text-align: center;
+}
+
+.marquee {
+    display: inline-block;
+    padding-left: 100%;
+    animation: scroll-left 15s linear infinite;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0%);
+    }
+    100% {
+        transform: translateX(-100%);
+    }
+}

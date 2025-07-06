@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>IoT Dashboard - Home</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body class="home-bg">
+  <div class="navbar">
+    <div class="menu">
+      Contents
+      <div class="dropdown">
+        <a href="/">Home</a>
+        <a href="/live-data">Live Data</a>
+      </div>
+    </div>
+  </div>
+  <div class="dot-nav">
+    <div class="dot active"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot"></div>
+  </div>
+
+  <main>
+    <div class="home-container">
+      <div class="content-box">
+        <h1>Welcome to my project called: Smart Vertical Farming vs Global Warming</h1>
+        <p>Explore the journey of building an AI-powered plant monitoring system.</p>
+      </div>
+    </div>
+
+    <div class="story-container">
+      <div class="content-box">
+        <h2>Project Inspiration</h2>
+        <p>
+          To develop my AI-powered plant monitoring system, I began by researching the role of each sensor in ensuring healthy plant growth. Understanding how environmental factors such as light, temperature, humidity, and soil moisture affect plants was crucial.
+        </p>
+      </div>
+    </div>
+
+    <div class="story-container">
+      <div class="content-box">
+        <h2>Environmental Monitoring</h2>
+        <p>
+          The temperature and humidity sensor ensured that the plant's environment remained within optimal parameters, while the water level sensor prevented the automated watering system from running dry. 
+        </p>
+        <p>
+          Additionally, I incorporated a soil moisture sensor to avoid overwatering or underwatering.
+        </p>
+      </div>
+    </div>
+
+    <div class="story-container">
+      <div class="content-box">
+        <h2>Development Phases</h2>
+        <p>
+          I structured the project into different phases to ensure smooth execution. The first phase, which lasted two to three days, involved studying the function of each sensor and understanding their interaction with plant health.
+        </p>
+        <p>
+          The next step, which took about three to four days, involved connecting all sensors to the ESP32 microcontroller and setting up the hardware.
+        </p>
+      </div>
+    </div>
+
+    <div class="story-container">
+      <div class="content-box">
+        <h2>Testing and Automation</h2>
+        <p>
+          Once assembled, I wrote simple code to independently verify each sensor’s operation, ensuring they provided accurate readings. After confirming that all components functioned correctly, I integrated them into a single automated system.
+        </p>
+        <p>
+          Over the course of one to two weeks, I fine-tuned the system by testing and refining its response to real-time environmental changes.
+        </p>
+      </div>
+    </div>
+
+    <div class="story-container">
+      <div class="content-box">
+        <h2>Smart Alerts</h2>
+        <p>
+          To enhance efficiency, I implemented automated alerts that notify me if any environmental parameter exceeds optimal levels. This ensures that the plants receive the right amount of water whenever needed.
+        </p>
+        <p>
+          For example, if the temperature or humidity strays beyond the desired range, I receive an alert to take corrective action.
+        </p>
+      </div>
+    </div>
+
+    <div class="story-container">
+      <div class="content-box">
+        <h2>Conclusion</h2>
+        <p>
+          Through continuous testing and improvements, I successfully built an intelligent monitoring system that adjusts environmental conditions in real-time. This ensures that plants receive the right amount of light and water for optimal growth.
+        </p>
+        <p>
+          The project not only enhances plant health but also promotes resource efficiency, making it a scalable and sustainable model for smart urban farming.
+        </p>
+      </div>
+    </div>
+  </main>
+  <script>
+    const sections = document.querySelectorAll('.home-container, .story-container');
+    const dots = document.querySelectorAll('.dot');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          dots.forEach(dot => dot.classList.remove('active'));
+          const index = Array.from(sections).indexOf(entry.target);
+          if (index >= 0 && dots[index]) {
+            dots[index].classList.add('active');
+          }
+          entry.target.classList.add('visible');
+        } else {
+          entry.target.classList.remove('visible');
+        }
+      });
+    }, { threshold: 0.6 });
+    sections.forEach(section => observer.observe(section));
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => {
+        sections[idx].scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>
