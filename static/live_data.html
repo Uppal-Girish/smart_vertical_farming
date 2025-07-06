@@ -9,7 +9,14 @@
 <body class="bg-image">
   <div class="navbar">
     <div class="menu">
-      Contents
+      <button class="menu-button">Contents ▾</button>
+      <div class="dropdown">
+        <a href="/">Home</a>
+        <a href="/live-data">Live Data</a>
+      </div>
+    </div>
+  </div>
+
       <div class="dropdown">
         <a href="/">Home</a>
         <a href="/live-data">Live Data</a>
@@ -70,22 +77,25 @@
     ws.onclose = () => {
       console.log("WebSocket disconnected");
     };
-
     document.addEventListener('DOMContentLoaded', () => {
-      const menu = document.querySelector('.menu');
-      const button = document.querySelector('.menu-button');
+    const menu = document.querySelector('.menu');
+    const button = document.querySelector('.menu-button');
 
-      button.addEventListener('click', (e) => {
-        e.stopPropagation();
-        menu.classList.toggle('open');
-      });
-
-      document.addEventListener('click', (e) => {
-        if (!menu.contains(e.target)) {
-          menu.classList.remove('open');
-        }
-      });
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menu.classList.toggle('open');
     });
+
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target)) {
+        menu.classList.remove('open');
+      }
+    });
+    
+    menu.addEventListener('mouseleave', () => {
+      menu.classList.remove('open');
+    });
+  });
   </script>
 </body>
 </html>

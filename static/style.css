@@ -55,33 +55,36 @@ body.bg-image {
 }
 
 .menu {
-    color: #222;
-    display: inline-block;
-    position: relative;
-    font-size: 20px;
+  color: #222;
+  display: inline-block;
+  position: relative;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .menu-button {
   background: none;
   border: none;
-  color: #222;
   font-size: 20px;
   cursor: pointer;
+  color: inherit;
+  padding: 0;
 }
 
-.menu  .dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: white;
-    border: 1px solid #ccc;
-    padding: 10px;
-    z-index: 1000;
+.dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1000;
 }
 
-.menu.open .dropdown {
-    display: block;
+.menu.open .dropdown,
+.menu:hover .dropdown {
+  display: block;
 }
 
 .dropdown a {

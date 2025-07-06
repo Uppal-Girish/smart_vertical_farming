@@ -148,5 +148,27 @@
       });
     });
   </script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const menu = document.querySelector('.menu');
+    const button = document.querySelector('.menu-button');
+
+    button.addEventListener('click', (e) => {
+      e.stopPropagation();
+      menu.classList.toggle('open');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!menu.contains(e.target)) {
+        menu.classList.remove('open');
+      }
+    });
+
+    // Optional: hide when mouse leaves if it was opened by click
+    menu.addEventListener('mouseleave', () => {
+      menu.classList.remove('open');
+    });
+  });
+</script>
 </body>
 </html>
