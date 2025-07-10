@@ -64,7 +64,13 @@
         menuButton.setAttribute('aria-expanded', 'false');
       }
     });
-  </script>
 
+    document.addEventListener('DOMContentLoaded', () => {
+      const content = document.querySelector('.about-box');
+      requestAnimationFrame(() => {
+        content.classList.add('visible');
+      });
+    });
+    </script>
 </body>
 </html>

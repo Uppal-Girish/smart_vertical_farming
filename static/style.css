@@ -223,11 +223,38 @@ h1,
     }
 }
 
+@keyframes fadeSlideDip {
+  0% {
+    opacity: 0;
+    transform: translateY(-40px);
+  }
+  58% {
+    opacity: 1;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .about-box {
-  background: rgba(200, 50, 50, 0.95) !important;
-  color: #fff !important;
+  background: rgba(200, 50, 50, 0.95);
+  color: #fdfdfd;
+  padding: 30px 40px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 600px;
+  margin: 40px auto;
+  text-align: left;
+  line-height: 1.7;
+  transform: translateY(-40px);
+}
+
+.about-box.visible {
+  animation: fadeSlideDip 1.5s ease-out forwards;
 }
 
 .about-box h1 {
-  color: #fff !important;
+  color: #fff;
 }
