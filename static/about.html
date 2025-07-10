@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>About This Project - Smart Vertical Farming</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <style>
+    main {
+      padding-top: 70px;
+      max-width: 900px;
+      margin: 40px auto;
+    }
+  </style>
+</head>
+<body class="home-bg">
+  <div class="navbar">
+    <div class="menu">
+      <button class="menu-button">Contents ▾</button>
+      <div class="dropdown">
+        <a href="/">Home</a>
+        <a href="/about-this-project">About This Project</a>
+        <a href="/live-data">Live Data</a>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <section class="content-box about-box">
+      <h1>About This Project</h1>
+      <p>
+        This project addresses critical challenges like water waste and food security
+        by integrating environmental sensors with IoT technology. It uses temperature,
+        humidity, soil moisture, and water level sensors connected to an ESP32 microcontroller
+        that streams real-time data to a backend and user interfaces.
+      </p>
+
+      <h2>How It Works</h2>
+      <p>
+        Sensors → ESP32 → FastAPI → Website + Blynk App + WhatsApp Alerts
+      </p>
+
+      <h2>Learning Journey and Challenges</h2>
+      <p>
+        Building this project was a valuable learning experience involving hardware-software integration,
+        real-time data handling, API communication, and web development. Challenges included managing sensor accuracy,
+        ensuring stable Wi-Fi connectivity, and creating a user-friendly interface for monitoring and alerts.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const menuButton = document.querySelector('.menu-button');
+    const dropdown = document.querySelector('.dropdown');
+
+    menuButton.addEventListener('click', () => {
+      const expanded = menuButton.getAttribute('aria-expanded') === 'true';
+      menuButton.setAttribute('aria-expanded', !expanded);
+      dropdown.style.display = expanded ? 'none' : 'block';
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!menuButton.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = 'none';
+        menuButton.setAttribute('aria-expanded', 'false');
+      }
+    });
+  </script>
+
+</body>
+</html>

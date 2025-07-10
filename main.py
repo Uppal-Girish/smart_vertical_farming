@@ -16,6 +16,11 @@ def home():
 def live_data():
     return FileResponse("static/live_data.html")
 
+@app.get("/about-this-project")
+def about_project():
+    return FileResponse("static/about.html")
+
+
 class SensorData(BaseModel):
     temperature: float
     humidity: float
