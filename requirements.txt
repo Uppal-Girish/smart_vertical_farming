@@ -5,5 +5,4 @@ pydantic
 typing
 matplotlib
 pandas
-base64
 sklearn.linear_model
