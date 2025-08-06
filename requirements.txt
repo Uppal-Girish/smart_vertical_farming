@@ -6,3 +6,4 @@ typing
 matplotlib
 pandas
 scikit-learn
+python-multipart
