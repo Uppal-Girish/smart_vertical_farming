@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Health Predictor</title>
+  <link rel="stylesheet" href="/static/style.css" />
+  <style>
+    html, body {
+      height: auto !important;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+
+    
+    .home-container,
+    .story-container,
+    main {
+      height: auto !important;
+      scroll-snap-align: none !important;
+      scroll-snap-type: none !important;
+      overflow: visible !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="navbar">
+    <div class="menu">
+      <button class="menu-button">Contents ▾</button>
+      <div class="dropdown">
+        <a href="/">Home</a>
+        <a href="/about-this-project">About This Project</a>
+        <a href="/live-data">Live Data</a>
+        <a href="/health-predictor">Health Predictor</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div style="padding-top: 100px;">
+    <h1 class="center">🌿 Plant Health Predictor (5-Day Input)</h1>
+
+    <!-- Input Form -->
+    <form method="post" action="/health-predictor" class="form-container">
+      <table class="form-table">
+        <thead>
+          <tr>
+            <th>Day</th>
+            <th>Temperature (°C)</th>
+            <th>Humidity (%)</th>
+            <th>Soil Moisture</th>
+            <th>Distance (cm)</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in range(1,6) %}
+          <tr>
+            <td>Day {{ i }}</td>
+            <td>
+              <input type="number" step="any" name="temperature{{ i }}"
+                     value="{{ input_data[i-1]['Temperature'] if input_data is defined else '' }}" required>
+            </td>
+            <td>
+              <input type="number" step="any" name="humidity{{ i }}"
+                     value="{{ input_data[i-1]['Humidity'] if input_data is defined else '' }}" required>
+            </td>
+            <td>
+              <input type="number" step="any" name="moisture{{ i }}"
+                     value="{{ input_data[i-1]['Moisture'] if input_data is defined else '' }}" required>
+            </td>
+            <td>
+              <input type="number" step="any" name="distance{{ i }}"
+                     value="{{ input_data[i-1]['Distance'] if input_data is defined else '' }}" required>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <div class="center">
+        <button type="submit">Predict Plant Health</button>
+      </div>
+    </form>
+
+    <!-- Message -->
+    {% if predicted_health_avg is defined %}
+    <div class="content-box" style="text-align: center; margin-top: 50px;">
+      <h2>✅ Your chart results are now ready!</h2>
+      <p>Scroll down to see and review them.</p>
+    </div>
+    {% endif %}
+  </div>
+
+  <!-- Scroll Target: Prediction Results -->
+  {% if predicted_health_avg is defined %}
+  <div style="padding-top: 100px;" id="results">
+    <div class="content-box fade-in">
+      <h2>🌱 Average Predicted Health Score: {{ predicted_health_avg }}%</h2>
+    </div>
+
+    <div class="content-box fade-in">
+      <h3>📊 Predicted Health Over 5 Days</h3>
+      <img src="data:image/png;base64,{{ plot_image }}" alt="Health Prediction Chart"
+           style="max-width: 100%; height: auto;">
+    </div>
+  </div>
+  {% endif %}
+
+  <!-- Dropdown JS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const menu = document.querySelector('.menu');
+      const button = document.querySelector('.menu-button');
+
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('open');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!menu.contains(e.target)) {
+          menu.classList.remove('open');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
