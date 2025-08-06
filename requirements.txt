@@ -1,3 +1,11 @@
 fastapi
 uvicorn[standard]
 Flask
+pydantic
+typing
+matplotlib
+pandas
+matplotlib.pyplot
+io
+base64
+sklearn.linear_model
