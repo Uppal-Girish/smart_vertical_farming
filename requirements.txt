@@ -5,4 +5,4 @@ pydantic
 typing
 matplotlib
 pandas
-sklearn
+scikit-learn
