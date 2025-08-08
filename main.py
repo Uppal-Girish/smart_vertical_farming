@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
+from fastapi.responses import HTMLResponse
 from typing import List, Optional
 from io import BytesIO
 from io import StringIO
@@ -203,6 +204,6 @@ def ssl_check():
     except Exception as e:
         return {"status": "failure", "error": str(e)}
     
-@app.get("/ping")
+@app.get("/ping", response_class=HTMLResponse)
 def ping():
-    return {"status": "ok"}
+    return "ok"
