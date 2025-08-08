@@ -1,10 +1,19 @@
-<!--Use uvicorn main:app --host 0.0.0.0 --port 8080 --reload -->
+<!-- Use uvicorn main:app --host 0.0.0.0 --port 8080 --reload -->
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8" />
   <title>Live Data</title>
   <link rel="stylesheet" href="/static/style.css" />
+  <style>
+    /* Add these if not in your CSS */
+    .hidden {
+      display: none;
+    }
+    .visible {
+      display: block;
+    }
+  </style>
 </head>
 <body class="bg-image">
   <div class="navbar">
@@ -18,8 +27,7 @@
       </div>
     </div>
   </div>
-    </div>
-  </div>
+
   <div style="padding-top: 100px;">
     <h1>
       <div class="marquee-container">
@@ -48,47 +56,80 @@
     </div>
   </div>
 
+  <!-- Graphed Results Toggle -->
+  <div id="toggle-chart-button" class="menu-button chart-toggle-btn">
+    Graphed Results ▾
+  </div>
+  
+  <div id="chart-section" class="chart-section hidden">
+    <div class="content-box">
+      <h2>📊 Graphed Health Data</h2>
+      <p>Average Health: <strong>{{ average_health }}%</strong></p>
+      <img src="data:image/png;base64,{{ chart_image }}" alt="Graphed Chart" class="fade-in-chart" />
+      <div style="text-align: center; margin-top: 20px;">
+        <button onclick="scrollBackUp()" class="menu-button back-button">⬆ Back to Live Data</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    const tempSpan = document.getElementById("temp");
-    const humSpan = document.getElementById("hum");
-    const soilSpan = document.getElementById("soil");
-    const distSpan = document.getElementById("dist");
-    const waterSpan = document.getElementById("water");
-
-    const wsProtocol = location.protocol === "https:" ? "wss" : "ws";
-    const ws = new WebSocket(`${wsProtocol}://${location.host}/ws`);
-
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      tempSpan.textContent = data.temperature.toFixed(1);
-      humSpan.textContent = data.humidity.toFixed(1);
-      soilSpan.textContent = data.soilMoisture;
-      distSpan.textContent = data.distance;
-      waterSpan.textContent = data.waterDetected === 1 ? "Yes" : "No";
-    };
-
-    ws.onopen = () => {
-      console.log("WebSocket connected");
-    };
-
-    ws.onclose = () => {
-      console.log("WebSocket disconnected");
-    };
     document.addEventListener('DOMContentLoaded', () => {
-    const menu = document.querySelector('.menu');
-    const button = document.querySelector('.menu-button');
+      const tempSpan = document.getElementById("temp");
+      const humSpan = document.getElementById("hum");
+      const soilSpan = document.getElementById("soil");
+      const distSpan = document.getElementById("dist");
+      const waterSpan = document.getElementById("water");
 
-    button.addEventListener('click', (e) => {
-      e.stopPropagation();
-      menu.classList.toggle('open');
-    });
+      const wsProtocol = location.protocol === "https:" ? "wss" : "ws";
+      const ws = new WebSocket(`${wsProtocol}://${location.host}/ws`);
 
-    document.addEventListener('click', (e) => {
-      if (!menu.contains(e.target)) {
-        menu.classList.remove('open');
+      ws.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        tempSpan.textContent = data.temperature.toFixed(1);
+        humSpan.textContent = data.humidity.toFixed(1);
+        soilSpan.textContent = data.soilMoisture;
+        distSpan.textContent = data.distance;
+        waterSpan.textContent = data.waterDetected === 1 ? "Yes" : "No";
+      };
+
+      ws.onopen = () => {
+        console.log("WebSocket connected");
+      };
+
+      ws.onclose = () => {
+        console.log("WebSocket disconnected");
+      };
+
+      const menu = document.querySelector('.menu');
+      const button = document.querySelector('.menu-button');
+
+      button.addEventListener('click', (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('open');
+      });
+
+      document.addEventListener('click', (e) => {
+        if (!menu.contains(e.target)) {
+          menu.classList.remove('open');
+        }
+      });
+
+      const toggleChartBtn = document.getElementById('toggle-chart-button');
+      const chartSection = document.getElementById('chart-section');
+
+      toggleChartBtn.addEventListener('click', () => {
+        chartSection.classList.toggle('visible');
+        chartSection.classList.toggle('hidden');
+      });
+
+      function scrollBackUp() {
+        chartSection.classList.remove('visible');
+        chartSection.classList.add('hidden');
       }
+
+      // Expose scrollBackUp globally for inline onclick in button
+      window.scrollBackUp = scrollBackUp;
     });
-  });
   </script>
 </body>
 </html>

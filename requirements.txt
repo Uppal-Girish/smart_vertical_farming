@@ -1,9 +1,9 @@
 fastapi
 uvicorn[standard]
-Flask
 pydantic
-typing
 matplotlib
 pandas
 scikit-learn
 python-multipart
+requests
+certifi

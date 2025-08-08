@@ -7,3 +7,6 @@ Added home, about this project, live data and health predictor all with ne page 
 
 #Added update log and some precautions- try bug fixes 6:
 Just sorting out the libraries and fixed a typo in requirements.txt as my health predictor required ML libraries which I forgot to add in requirements.txt.
+
+#V1.1.0:
+I have added another page to live data called graphed results and my inital vision is now complete now I will get more ideas and progress on making my website bigger, better and more proffesional. Thank you.

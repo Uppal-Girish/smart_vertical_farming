@@ -209,6 +209,64 @@ h1,
     margin: 10px 0;
 }
 
+.chart-toggle-btn {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid white;
+  padding: 10px 20px;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  z-index: 999;
+  transition: background-color 0.3s ease;
+}
+
+.chart-toggle-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.chart-section {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.97);
+  padding: 60px 20px;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.2);
+  transition: bottom 0.7s ease-in-out;
+  z-index: 998;
+}
+
+.chart-section.visible {
+  bottom: 0;
+}
+
+.chart-section .fade-in-chart {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.back-button {
+  background: #254117;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 .marquee-container {
     width: 100%;
     white-space: nowrap;
