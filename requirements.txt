@@ -1,6 +1,7 @@
 fastapi
 uvicorn[standard]
 pydantic
+jinja2
 matplotlib
 pandas
 scikit-learn
