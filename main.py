@@ -202,3 +202,7 @@ def ssl_check():
         return {"status": "success", "cert_path": cert_path}
     except Exception as e:
         return {"status": "failure", "error": str(e)}
+    
+@app.get("/ping")
+def ping():
+    return {"status": "ok"}
