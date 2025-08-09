@@ -17,6 +17,12 @@
       </div>
     </div>
   </div>
+{% extends "base.html" %}
+
+{% block title %}IoT Dashboard - Home{% endblock %}
+{% block body_class %}home-bg{% endblock %}
+
+{% block content %}
 
   <div class="dot-nav">
     <div class="dot active"></div>
@@ -145,5 +151,6 @@
       });
     });
   </script>
+    {% endblock %}
 </body>
 </html>

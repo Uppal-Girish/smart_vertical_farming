@@ -27,6 +27,12 @@
       </div>
     </div>
   </div>
+{% extends "base.html" %}
+
+{% block title %}IoT Dashboard - Home{% endblock %}
+{% block body_class %}home-bg{% endblock %}
+  
+{% block content %}
 
   <div style="padding-top: 100px;">
     <h1>
@@ -131,5 +137,6 @@
       window.scrollBackUp = scrollBackUp;
     });
   </script>
+  {% endblock %}
 </body>
 </html>

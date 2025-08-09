@@ -8,3 +8,5 @@ scikit-learn
 python-multipart
 requests
 certifi
+asyncio
+bs4

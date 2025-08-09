@@ -36,6 +36,13 @@
     </div>
   </div>
 
+{% extends "base.html" %}
+
+{% block title %}IoT Dashboard - Home{% endblock %}
+{% block body_class %}home-bg{% endblock %}
+  
+{% block content %}
+
   <!-- Main Content -->
   <div style="padding-top: 100px;">
     <h1 class="center">🌿 Plant Health Predictor (5-Day Input)</h1>
@@ -123,5 +130,6 @@
       });
     });
   </script>
+  {% endblock %}
 </body>
 </html>

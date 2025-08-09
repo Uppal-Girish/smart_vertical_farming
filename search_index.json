@@ -1,0 +1,22 @@
+[
+  {
+    "url": "/",
+    "title": "Home",
+    "content": "IoT Dashboard - Home Welcome to my project called: Smart Vertical Farming vs Global Warming Explore the journey of building an AI-powered plant monitoring system by scrolling down. Project Inspiration To develop my AI-powered plant monitoring system, I began by researching the role of each sensor in ensuring healthy plant growth. Understanding how environmental factors such as light, temperature, humidity, and soil moisture affect plants was crucial. Environmental Monitoring The temperature and humidity sensor ensured that the plant's environment remained within optimal parameters, while the water level sensor prevented the automated watering system from running dry. Additionally, I incorporated a soil moisture sensor to avoid overwatering or underwatering. Development Phases I structured the project into different phases to ensure smooth execution. The first phase, which lasted two to three days, involved studying the function of each sensor and understanding their interaction with plant health. The next step, which took about three to four days, involved connecting all sensors to the ESP32 microcontroller and setting up the hardware. Testing and Automation Once assembled, I wrote simple code to independently verify each sensor’s operation, ensuring they provided accurate readings. After confirming that all components functioned correctly, I integrated them into a single automated system. Over the course of one to two weeks, I fine-tuned the system by testing and refining its response to real-time environmental changes. Smart Alerts To enhance efficiency, I implemented automated alerts that notify me if any environmental parameter exceeds optimal levels. This ensures that the plants receive the right amount of water whenever needed. For example, if the temperature or humidity strays beyond the desired range, I receive an alert to take corrective action. Conclusion Through continuous testing and improvements, I successfully built an intelligent monitoring system that adjusts environmental conditions in real-time. This ensures that plants receive the right amount of light and water for optimal growth. The project not only enhances plant health but also promotes resource efficiency, making it a scalable and sustainable model for smart urban farming."
+  },
+  {
+    "url": "/about-this-project",
+    "title": "About This Project",
+    "content": "About This Project - About This Project This project addresses critical challenges like water waste and food security\n        by integrating environmental sensors with IoT technology. It uses temperature,\n        humidity, soil moisture, and water level sensors connected to an ESP32 microcontroller\n        that streams real-time data to a backend and user interfaces. How It Works Sensors → ESP32 → FastAPI → Website + Blynk App + WhatsApp Alerts Learning Journey and Challenges Building this project was a valuable learning experience involving hardware-software integration,\n        real-time data handling, API communication, and web development. Challenges included managing sensor accuracy,\n        ensuring stable Wi-Fi connectivity, and creating a user-friendly interface for monitoring and alerts."
+  },
+  {
+    "url": "/live-data",
+    "title": "Live Data",
+    "content": "Live Data Live Temperature, Humidity, Soil Moisture, Distance, Water Level Temperature: -- °C Humidity: -- % Soil Moisture: -- Distance: -- cm Water Level: -- Graphed Results ▾ 📊 Graphed Health Data Average Health: {{ average_health }}% ⬆ Back to Live Data"
+  },
+  {
+    "url": "/health-predictor",
+    "title": "Health Predictor",
+    "content": "Health Predictor 🌿 Plant Health Predictor (5-Day Input) Day Temperature (°C) Humidity (%) Soil Moisture Distance (cm) {% for i in range(1,6) %} Day {{ i }} {% endfor %} Predict Plant Health {% if predicted_health_avg is defined %} ✅ Your chart results are now ready! Scroll down to see and review them. {% endif %} {% if predicted_health_avg is defined %} 🌱 Average Predicted Health Score: {{ predicted_health_avg }}% 📊 Predicted Health Over 5 Days {% endif %}"
+  }
+]

@@ -25,6 +25,13 @@
     </div>
   </div>
 
+{% extends "base.html" %}
+
+{% block title %}IoT Dashboard - Home{% endblock %}
+{% block body_class %}home-bg{% endblock %}
+  
+{% block content %}
+
   <main>
     <section class="content-box about-box">
       <h1>About This Project</h1>
@@ -73,5 +80,6 @@
       });
     });
     </script>
+    {% endblock %}
 </body>
 </html>

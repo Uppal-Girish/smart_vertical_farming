@@ -9,3 +9,6 @@ Just sorting out the libraries and fixed a typo in requirements.txt as my health
 
 #V1.1.0:
 I have added another page to live data called graphed results and my inital vision is now complete now I will get more ideas and progress on making my website bigger, better and more professional. Thank you.
+
+#V1.1.1
+To make my website more professional I have added a search engine! While it might not seem like much now as my website expands this will become essential and I feel like it is a good thing to do early as if I do it late then it might not adapt with my code.

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Smart Vertical Farming{% endblock %}</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="menu">
+            <button class="menu-button">Contents ▾</button>
+            <div class="dropdown">
+                <a href="/">Home</a>
+                <a href="/about-this-project">About</a>
+                <a href="/live-data">Live Data</a>
+                <a href="/health-predictor">Health Predictor</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🔍 Search container -->
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search...">
+        <div class="search-results"></div>       
+    </div>
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- 🔍 AJAX search script -->
+    <script>
+    const input = document.querySelector('.search-input');
+    const resultsBox = document.querySelector('.search-results');
+
+    function highlightMatch(text, query) {
+        if (!query) return text;
+        // Escape special regex chars in query to avoid errors
+        const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const regex = new RegExp(`(${escapedQuery})`, 'gi'); // case-insensitive match
+        return text.replace(regex, '<mark>$1</mark>');
+    }
+
+    input.addEventListener('input', async () => {
+        const query = input.value.trim();
+        if (!query) {
+            resultsBox.style.display = 'none';
+            resultsBox.innerHTML = '';
+            return;
+        }
+
+        try {
+            const res = await fetch(`/search?q=${encodeURIComponent(query)}`);
+            const results = await res.json();
+
+            if (results.length === 0) {
+                resultsBox.innerHTML = '<div>No results found.</div>';
+            } else {
+                resultsBox.innerHTML = results.map(r => `
+                    <div onclick="window.location.href='${r.url}'">
+                        <strong>${highlightMatch(r.title, query)}</strong><br/>
+                        <small>${highlightMatch(r.snippet, query)}</small>
+                    </div>
+                `).join('');
+            }
+
+            resultsBox.style.display = 'block';
+        } catch (err) {
+            resultsBox.innerHTML = '<div>Error retrieving results.</div>';
+            resultsBox.style.display = 'block';
+        }
+    });
+
+    document.addEventListener('click', e => {
+        if (!document.querySelector('.search-container').contains(e.target)) {
+            resultsBox.style.display = 'none';
+        }
+    });
+    </script>
+</body>
+</html>

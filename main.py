@@ -1,5 +1,5 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request, Form
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
@@ -15,12 +15,23 @@ from sklearn.linear_model import LinearRegression
 import ssl
 import certifi
 import requests
+import json
+import os
 
 app = FastAPI()
 
 # Static and templates
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
+
+# Load search index JSON on startup
+search_index_path = "search_index.json"
+if os.path.exists(search_index_path):
+    with open(search_index_path, "r", encoding="utf-8") as f:
+        search_index = json.load(f)
+else:
+    search_index = []
+
 
 # Routes
 @app.get("/", response_class=HTMLResponse)
@@ -194,16 +205,24 @@ async def health_predictor(
     "input_data": df.to_dict(orient="records"),
     "show_results": True
 })
-
-@app.get("/ssl-check")
-def ssl_check():
-    cert_path = certifi.where()
-    try:
-        context = ssl.create_default_context(cafile=cert_path)
-        return {"status": "success", "cert_path": cert_path}
-    except Exception as e:
-        return {"status": "failure", "error": str(e)}
     
 @app.get("/ping", response_class=HTMLResponse)
 def ping():
     return "ok"
+
+@app.get("/search")
+async def search(q: str):
+    query = q.lower()
+    results = []
+    for entry in search_index:
+        if query in entry["content"].lower():
+            idx = entry["content"].lower().find(query)
+            start = max(0, idx - 30)
+            end = min(len(entry["content"]), idx + 120)
+            snippet = entry["content"][start:end].replace("\n", " ")
+            results.append({
+                "url": entry["url"],
+                "title": entry["title"],
+                "snippet": snippet + "..."
+            })
+    return JSONResponse(content=results)
