@@ -24,58 +24,107 @@
         <input type="text" class="search-input" placeholder="Search...">
         <div class="search-results"></div>       
     </div>
+    <div class="fullscreen-search" id="fullscreen-search">
+        <span class="close-icon" id="exit-fullscreen-search">×</span>
+        <h2>Search Results</h2>
+        <div id="fullscreen-results"></div>
+    </div>
+
 
     {% block content %}
     {% endblock %}
 
     <!-- 🔍 AJAX search script -->
-    <script>
-    const input = document.querySelector('.search-input');
-    const resultsBox = document.querySelector('.search-results');
+<script>
+const input = document.querySelector('.search-input');
+const normalResultsBox = document.querySelector('.search-results');
+const fullscreenSearch = document.getElementById('fullscreen-search');
+const fullscreenResults = document.getElementById('fullscreen-results');
 
-    function highlightMatch(text, query) {
-        if (!query) return text;
-        // Escape special regex chars in query to avoid errors
-        const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        const regex = new RegExp(`(${escapedQuery})`, 'gi'); // case-insensitive match
-        return text.replace(regex, '<mark>$1</mark>');
+function highlightMatch(text, query) {
+    if (!query) return text;
+    const escapedQuery = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`(${escapedQuery})`, 'gi');
+    return text.replace(regex, '<mark>$1</mark>');
+}
+
+// Show live preview in dropdown
+input.addEventListener('input', async () => {
+    const query = input.value.trim();
+    if (!query) {
+        normalResultsBox.style.display = 'none';
+        normalResultsBox.innerHTML = '';
+        return;
     }
 
-    input.addEventListener('input', async () => {
-        const query = input.value.trim();
-        if (!query) {
-            resultsBox.style.display = 'none';
-            resultsBox.innerHTML = '';
-            return;
+    try {
+        const res = await fetch(`/search?q=${encodeURIComponent(query)}`);
+        const results = await res.json();
+
+        if (results.length === 0) {
+            normalResultsBox.innerHTML = '<div>No results found.</div>';
+        } else {
+            normalResultsBox.innerHTML = results.map(r => `
+                <div onclick="window.location.href='${r.url}'">
+                    <strong>${highlightMatch(r.title, query)}</strong><br/>
+                    <small>${highlightMatch(r.snippet, query)}</small>
+                </div>
+            `).join('');
         }
+
+        normalResultsBox.style.display = 'block';
+    } catch (err) {
+        normalResultsBox.innerHTML = '<div>Error retrieving results.</div>';
+        normalResultsBox.style.display = 'block';
+    }
+});
+
+// Show fullscreen results on Enter
+input.addEventListener('keydown', async (e) => {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+
+        const query = input.value.trim();
+        if (!query) return;
 
         try {
             const res = await fetch(`/search?q=${encodeURIComponent(query)}`);
             const results = await res.json();
 
+            fullscreenResults.innerHTML = '';
             if (results.length === 0) {
-                resultsBox.innerHTML = '<div>No results found.</div>';
+                fullscreenResults.innerHTML = '<div>No results found.</div>';
             } else {
-                resultsBox.innerHTML = results.map(r => `
-                    <div onclick="window.location.href='${r.url}'">
+                fullscreenResults.innerHTML = results.map(r => `
+                    <div class="fullscreen-result" onclick="window.location.href='${r.url}'">
                         <strong>${highlightMatch(r.title, query)}</strong><br/>
                         <small>${highlightMatch(r.snippet, query)}</small>
                     </div>
                 `).join('');
             }
 
-            resultsBox.style.display = 'block';
-        } catch (err) {
-            resultsBox.innerHTML = '<div>Error retrieving results.</div>';
-            resultsBox.style.display = 'block';
-        }
-    });
+            // ⬇️ Ensure fullscreen overlay is visible
+            fullscreenSearch.classList.add('show');
 
-    document.addEventListener('click', e => {
-        if (!document.querySelector('.search-container').contains(e.target)) {
-            resultsBox.style.display = 'none';
+            // ⬇️ Hide the dropdown when fullscreen is open
+            normalResultsBox.style.display = 'none';
+        } catch (err) {
+            fullscreenResults.innerHTML = '<div>Error retrieving results.</div>';
+            fullscreenSearch.classList.add('show');
         }
-    });
-    </script>
+    }
+});
+
+// Escape key closes fullscreen search
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+        fullscreenSearch.classList.remove('show');
+    }
+});
+// Exit button closes fullscreen search
+document.getElementById('exit-fullscreen-search').addEventListener('click', () => {
+    fullscreenSearch.classList.remove('show');
+});
+</script>
 </body>
 </html>
