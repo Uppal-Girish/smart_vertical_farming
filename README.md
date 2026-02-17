@@ -14,5 +14,8 @@ I have added another page to live data called graphed results and my inital visi
 # V1.1.1:
 To make my website more professional I have added a search engine! While it might not seem like much now as my website expands this will become essential and I feel like it is a good thing to do early as if I do it late then it might not adapt with my code.
 
-# search engine bug fix
-I realised there was a BIG bug within my search engine and so am releasing an update tofix that.
+# Search engine bug fix
+I realised there was a BIG bug within my search engine and so am releasing an update to fix that.
+
+# New pictures
+Added new pictures to the website to make it more visually appealing.
