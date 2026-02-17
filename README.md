@@ -18,4 +18,4 @@ To make my website more professional I have added a search engine! While it migh
 I realised there was a BIG bug within my search engine and so am releasing an update to fix that.
 
 # New pictures
-Added new pictures to the website to make it more visually appealing.
+Added new pictures to the website to make it more visually appealing in the home tab of my page. Check it out now by pressing the link above!
