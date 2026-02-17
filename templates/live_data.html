@@ -1,142 +1,154 @@
 <!-- Use uvicorn main:app --host 0.0.0.0 --port 8080 --reload -->
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-  <meta charset="UTF-8" />
-  <title>Live Data</title>
-  <link rel="stylesheet" href="/static/style.css" />
-  <style>
-    /* Add these if not in your CSS */
-    .hidden {
-      display: none;
-    }
-    .visible {
-      display: block;
-    }
-  </style>
-</head>
-<body class="bg-image">
-  <div class="navbar">
-    <div class="menu">
-      <button class="menu-button">Contents ▾</button>
-      <div class="dropdown">
-        <a href="/">Home</a>
-        <a href="/about-this-project">About This Project</a>
-        <a href="/live-data">Live Data</a>
-        <a href="/health-predictor">Health Predictor</a>
-      </div>
-    </div>
-  </div>
-{% extends "base.html" %}
-
-{% block title %}IoT Dashboard - Home{% endblock %}
-{% block body_class %}home-bg{% endblock %}
-  
-{% block content %}
-
-  <div style="padding-top: 100px;">
-    <h1>
-      <div class="marquee-container">
-        <div class="marquee">
-          Live Temperature, Humidity, Soil Moisture, Distance, Water Level
+    <head>
+        <meta charset="UTF-8" />
+        <title>Live Data</title>
+        <link rel="stylesheet" href="/static/style.css" />
+        <style>
+            /* Add these if not in your CSS */
+            .hidden {
+                display: none;
+            }
+            .visible {
+                display: block;
+            }
+        </style>
+    </head>
+    <body class="bg-image">
+        <div class="navbar">
+            <div class="menu">
+                <button class="menu-button">Contents ▾</button>
+                <div class="dropdown">
+                    <a href="/">Home</a>
+                    <a href="/about-this-project">About This Project</a>
+                    <a href="/live-data">Live Data</a>
+                    <a href="/health-predictor">Health Predictor</a>
+                </div>
+            </div>
         </div>
-      </div>
-    </h1>
+        {% extends "base.html" %} {% block title %}IoT Dashboard - Home{%
+        endblock %} {% block body_class %}home-bg{% endblock %} {% block content
+        %}
 
-    <div class="content-box">
-      <div class="data-pair">
-        <strong>Temperature:</strong> <span id="temp">--</span> °C
-      </div>
-      <div class="data-pair">
-        <strong>Humidity:</strong> <span id="hum">--</span> %
-      </div>
-      <div class="data-pair">
-        <strong>Soil Moisture:</strong> <span id="soil">--</span>
-      </div>
-      <div class="data-pair">
-        <strong>Distance:</strong> <span id="dist">--</span> cm
-      </div>
-      <div class="data-pair">
-        <strong>Water Level:</strong> <span id="water">--</span>
-      </div>
-    </div>
-  </div>
+        <div style="padding-top: 100px">
+            <h1>
+                <div class="marquee-container">
+                    <div class="marquee">
+                        Live Temperature, Humidity, Soil Moisture, Distance,
+                        Water Level
+                    </div>
+                </div>
+            </h1>
 
-  <!-- Graphed Results Toggle -->
-  <div id="toggle-chart-button" class="menu-button chart-toggle-btn">
-    Graphed Results ▾
-  </div>
-  
-  <div id="chart-section" class="chart-section hidden">
-    <div class="content-box">
-      <h2>📊 Graphed Health Data</h2>
-      <p>Average Health: <strong>{{ average_health }}%</strong></p>
-      <img src="data:image/png;base64,{{ chart_image }}" alt="Graphed Chart" class="fade-in-chart" />
-      <div style="text-align: center; margin-top: 20px;">
-        <button onclick="scrollBackUp()" class="menu-button back-button">⬆ Back to Live Data</button>
-      </div>
-    </div>
-  </div>
+            <div class="content-box">
+                <div class="data-pair">
+                    <strong>Temperature:</strong> <span id="temp">--</span> °C
+                </div>
+                <div class="data-pair">
+                    <strong>Humidity:</strong> <span id="hum">--</span> %
+                </div>
+                <div class="data-pair">
+                    <strong>Soil Moisture:</strong> <span id="soil">--</span>
+                </div>
+                <div class="data-pair">
+                    <strong>Distance:</strong> <span id="dist">--</span> cm
+                </div>
+                <div class="data-pair">
+                    <strong>Water Level:</strong> <span id="water">--</span>
+                </div>
+            </div>
+        </div>
 
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const tempSpan = document.getElementById("temp");
-      const humSpan = document.getElementById("hum");
-      const soilSpan = document.getElementById("soil");
-      const distSpan = document.getElementById("dist");
-      const waterSpan = document.getElementById("water");
+        <!-- Graphed Results Toggle -->
+        <div id="toggle-chart-button" class="menu-button chart-toggle-btn">
+            Graphed Results ▾
+        </div>
 
-      const wsProtocol = location.protocol === "https:" ? "wss" : "ws";
-      const ws = new WebSocket(`${wsProtocol}://${location.host}/ws`);
+        <div id="chart-section" class="chart-section hidden">
+            <div class="content-box">
+                <h2>📊 Graphed Health Data</h2>
+                <p>Average Health: <strong>{{ average_health }}%</strong></p>
+                <img
+                    src="data:image/png;base64,{{ chart_image }}"
+                    alt="Graphed Chart"
+                    class="fade-in-chart"
+                />
+                <div style="text-align: center; margin-top: 20px">
+                    <button
+                        onclick="scrollBackUp()"
+                        class="menu-button back-button"
+                    >
+                        ⬆ Back to Live Data
+                    </button>
+                </div>
+            </div>
+        </div>
 
-      ws.onmessage = (event) => {
-        const data = JSON.parse(event.data);
-        tempSpan.textContent = data.temperature.toFixed(1);
-        humSpan.textContent = data.humidity.toFixed(1);
-        soilSpan.textContent = data.soilMoisture;
-        distSpan.textContent = data.distance;
-        waterSpan.textContent = data.waterDetected === 1 ? "Yes" : "No";
-      };
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const tempSpan = document.getElementById("temp");
+                const humSpan = document.getElementById("hum");
+                const soilSpan = document.getElementById("soil");
+                const distSpan = document.getElementById("dist");
+                const waterSpan = document.getElementById("water");
 
-      ws.onopen = () => {
-        console.log("WebSocket connected");
-      };
+                const wsProtocol =
+                    location.protocol === "https:" ? "wss" : "ws";
+                const ws = new WebSocket(`${wsProtocol}://${location.host}/ws`);
 
-      ws.onclose = () => {
-        console.log("WebSocket disconnected");
-      };
+                ws.onmessage = (event) => {
+                    const data = JSON.parse(event.data);
+                    tempSpan.textContent = data.temperature.toFixed(1);
+                    humSpan.textContent = data.humidity.toFixed(1);
+                    soilSpan.textContent = data.soilMoisture;
+                    distSpan.textContent = data.distance;
+                    waterSpan.textContent =
+                        data.waterDetected === 1 ? "Yes" : "No";
+                };
 
-      const menu = document.querySelector('.menu');
-      const button = document.querySelector('.menu-button');
+                ws.onopen = () => {
+                    console.log("WebSocket connected");
+                };
 
-      button.addEventListener('click', (e) => {
-        e.stopPropagation();
-        menu.classList.toggle('open');
-      });
+                ws.onclose = () => {
+                    console.log("WebSocket disconnected");
+                };
 
-      document.addEventListener('click', (e) => {
-        if (!menu.contains(e.target)) {
-          menu.classList.remove('open');
-        }
-      });
+                const menu = document.querySelector(".menu");
+                const button = document.querySelector(".menu-button");
 
-      const toggleChartBtn = document.getElementById('toggle-chart-button');
-      const chartSection = document.getElementById('chart-section');
+                button.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    menu.classList.toggle("open");
+                });
 
-      toggleChartBtn.addEventListener('click', () => {
-        chartSection.classList.toggle('visible');
-        chartSection.classList.toggle('hidden');
-      });
+                document.addEventListener("click", (e) => {
+                    if (!menu.contains(e.target)) {
+                        menu.classList.remove("open");
+                    }
+                });
 
-      function scrollBackUp() {
-        chartSection.classList.remove('visible');
-        chartSection.classList.add('hidden');
-      }
+                const toggleChartBtn = document.getElementById(
+                    "toggle-chart-button",
+                );
+                const chartSection = document.getElementById("chart-section");
 
-      // Expose scrollBackUp globally for inline onclick in button
-      window.scrollBackUp = scrollBackUp;
-    });
-  </script>
-  {% endblock %}
-</body>
+                toggleChartBtn.addEventListener("click", () => {
+                    chartSection.classList.toggle("visible");
+                    chartSection.classList.toggle("hidden");
+                });
+
+                function scrollBackUp() {
+                    chartSection.classList.remove("visible");
+                    chartSection.classList.add("hidden");
+                }
+
+                // Expose scrollBackUp globally for inline onclick in button
+                window.scrollBackUp = scrollBackUp;
+            });
+        </script>
+
+        {% endblock %}
+    </body>
 </html>
