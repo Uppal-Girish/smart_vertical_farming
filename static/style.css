@@ -454,15 +454,15 @@ mark {
 .close-icon:hover {
     color: #444;
 }
-.story-with-image {
+.story-container .story-with-image {
     display: flex;
-    gap: 30px;
+    gap: 40px;
     align-items: center;
 }
 
-.story-with-image img {
-    max-width: 280px;
+.story-container .story-with-image img {
+    max-width: 300px;
     height: auto;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 }
